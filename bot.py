@@ -8,11 +8,12 @@ from football import gen_player
 bot = telebot.TeleBot(token)
 
 
+# welcome menu
 @bot.message_handler(commands=['start'])
 def send_welcome(m):
     try:
         user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
-        user_markup.row('⚽ Soccer', 'ℹ️ Help')
+        user_markup.row('⚽ Football', 'ℹ️ Help')
 
         db = sqlite3.connect("footballDB.sqlite")
         cursor = db.cursor()
@@ -53,6 +54,40 @@ def send_welcome(m):
 
     except Exception as error:
         print("Error occurred", error)
+
+
+# main menu
+@bot.message_handler(regexp="👈 Main Menu")
+def main_menu(m):
+    user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
+    user_markup.row('⚽ Football', 'ℹ️ Help')
+
+    user_msg = 'Return to the main menu.\n\n'
+    bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
+                     parse_mode="Markdown", disable_web_page_preview="True")
+
+
+# help menu
+@bot.message_handler(regexp="ℹ️ Help")
+def command_help(m):
+    help_text = "*FootGuessr Bot* 🤖: Send a private message to one of my creators (*@jackshen*, *@rudek0*) " \
+                "if you need help with something."
+    bot.send_message(m.chat.id, help_text, parse_mode='Markdown', disable_web_page_preview="True")
+
+
+# football stat menu
+@bot.message_handler(regexp="⚽ Football")
+def send_soccer(m):
+    user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
+
+    user_markup.row('🏴󠁧󠁢󠁥󠁮󠁧󠁿󠁧󠁢󠁥󠁮󠁧󠁿 England', '🇪🇸 Spain')
+    user_markup.row('🇩🇪 Germany', '🇫🇷 France')
+    user_markup.row('🇮🇹 Italy', '🇺🇦 Ukraine')
+    user_markup.row('👈 Main Menu')
+
+    user_msg = 'Football Statistics ⚽ from Top-Leagues 🔝 in Europe 🇪🇺\n\n'
+    bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
+                     parse_mode="Markdown", disable_web_page_preview="True")
 
 
 @bot.message_handler(content_types=['text'])
