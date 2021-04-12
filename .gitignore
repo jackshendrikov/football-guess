@@ -154,5 +154,5 @@ fabric.properties
 config.py
 
 # SQLite Database
-.sqlite
-.db
+*.sqlite
+*.db
