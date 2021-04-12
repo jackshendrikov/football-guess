@@ -3,6 +3,8 @@ import sqlite3
 
 from config import token
 from football import gen_player
+from leagues.pl_table import PL_TABLE
+
 
 # new bot instance
 bot = telebot.TeleBot(token)
@@ -70,14 +72,14 @@ def main_menu(m):
 # help menu
 @bot.message_handler(regexp="ℹ️ Help")
 def command_help(m):
-    help_text = "*FootGuessr Bot* 🤖: Send a private message to one of my creators (*@jackshen*, *@rudek0*) " \
+    help_text = "*FootGuessr Bot* 🤖: Send a private message to one of my creators *@jackshen*, *@rudek0* " \
                 "if you need help with something."
     bot.send_message(m.chat.id, help_text, parse_mode='Markdown', disable_web_page_preview="True")
 
 
 # football stat menu
 @bot.message_handler(regexp="⚽ Football")
-def send_soccer(m):
+def send_football(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
 
     user_markup.row('🏴󠁧󠁢󠁥󠁮󠁧󠁿󠁧󠁢󠁥󠁮󠁧󠁿 England', '🇪🇸 Spain')
@@ -85,9 +87,42 @@ def send_soccer(m):
     user_markup.row('🇮🇹 Italy', '🇺🇦 Ukraine')
     user_markup.row('👈 Main Menu')
 
-    user_msg = 'Football Statistics ⚽ from Top-Leagues 🔝 in Europe 🇪🇺\n\n'
+    user_msg = 'Football Statistics from Top-Leagues 🔝 in Europe 🇪🇺\n\n'
     bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
                      parse_mode="Markdown", disable_web_page_preview="True")
+
+
+# back to Main Football Menu
+@bot.message_handler(regexp="👈 Back")
+def football_back(m):
+    user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
+
+    user_markup.row('🏴󠁧󠁢󠁥󠁮󠁧󠁿󠁧󠁢󠁥󠁮󠁧󠁿 England', '🇪🇸 Spain')
+    user_markup.row('🇩🇪 Germany', '🇫🇷 France')
+    user_markup.row('🇮🇹 Italy', '🇺🇦 Ukraine')
+    user_markup.row('👈 Main Menu')
+
+    user_msg = 'Return to Main Football Menu.\n\n'
+    bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
+                     parse_mode="Markdown", disable_web_page_preview="True")
+
+
+# English Premier League
+@bot.message_handler(regexp="🏴󠁧󠁢󠁥󠁮󠁧󠁿󠁧󠁢󠁥󠁮󠁧󠁿 England")
+def send_england(m):
+    user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
+    user_markup.row('⚽ Premier League Table', '⚽ Premier League Scores')
+    user_markup.row('⚽ Premier League Results (Last Week)', '👈 Back')
+
+    user_msg = 'English Premier League Table and Scores.\n\n'
+    bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
+                     parse_mode="Markdown", disable_web_page_preview="True")
+
+
+@bot.message_handler(regexp="⚽ Premier League Table")
+def send_pl_table(message):
+    user_msg = PL_TABLE
+    bot.reply_to(message, user_msg)
 
 
 @bot.message_handler(content_types=['text'])
