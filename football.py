@@ -21,13 +21,18 @@ def parse_html(page):
     table_wiki = soup.find('table', {'class': 'infobox vcard'})
 
     result = []
-    for tr in table_wiki.find_all('tr'):
-        if tr.find('th'):
-            title = tr.find('th').text.replace('\n', '')
-            info = [i.text.replace('\n', '') for i in tr.find_all('td')]
+    try:
+        for tr in table_wiki.find_all('tr'):
+            if tr.find('th'):
+                title = tr.find('th').text.replace('\n', '')
+                info = [i.text.replace('\n', '') for i in tr.find_all('td')]
 
-            if len(title) < 20:
-                result.append((title, '|'.join(info)))
+                if len(title) < 20:
+                    result.append((title, '|'.join(info)))
+    except AttributeError:
+        print("Error with ", random_player)
+        print(soup)
+        result.append(("Unexpected error", "error"))
 
     return result
 
