@@ -10,11 +10,6 @@ ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
-random_player = choice(list(open('players.txt', encoding='utf-8'))).replace('\n', '')
-
-url = 'https://en.wikipedia.org/wiki/' + urllib.parse.quote(random_player)
-html = urllib.request.urlopen(url, context=ctx)
-
 
 def parse_html(page):
     soup = BeautifulSoup(page.read(), 'html.parser')
@@ -34,6 +29,7 @@ def parse_html(page):
         print(soup)
         result.append(("Unexpected error", "error"))
 
+    print(result)
     return result
 
 
@@ -62,16 +58,21 @@ def process_data(res):
         if 'Senior career' in k:
             go_next, header = True, True
 
-    print(table)
     return table
 
 
 def gen_player():
+    random_player = choice(list(open('players.txt', encoding='utf-8'))).replace('\n', '')
+
+
+    url = 'https://en.wikipedia.org/wiki/' + urllib.parse.quote(random_player)
+    html = urllib.request.urlopen(url, context=ctx)
+
     if html.getcode() == 200:
         result = parse_html(html)
         player_stat = process_data(result)
 
-        return player_stat
+        return [player_stat, " ".join(random_player.split("_"))]
 
     elif html.getcode() == 404:
         print("Page not found!")

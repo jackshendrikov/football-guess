@@ -4,6 +4,7 @@ import sqlite3
 from config import token
 from football import gen_player
 from leagues.pl_table import PL_TABLE
+from random import choice
 
 
 # new bot instance
@@ -16,6 +17,7 @@ def send_welcome(m):
     try:
         user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
         user_markup.row('⚽ Football', 'ℹ️ Help')
+        user_markup.row('⚽ Start the game')
 
         db = sqlite3.connect("footballDB.sqlite")
         cursor = db.cursor()
@@ -63,6 +65,7 @@ def send_welcome(m):
 def main_menu(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
     user_markup.row('⚽ Football', 'ℹ️ Help')
+    user_markup.row('⚽ Start the game')
 
     user_msg = 'Return to the main menu.\n\n'
     bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
@@ -124,13 +127,28 @@ def send_pl_table(message):
     user_msg = PL_TABLE
     bot.reply_to(message, user_msg)
 
+@bot.message_handler(regexp='⚽ Start the game')
+def guessing_game(message):
+    user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
+    user_markup.row('⚽ Football', 'ℹ️ Help')
+    user_markup.row('⚽ Start the game')
 
-@bot.message_handler(content_types=['text'])
-def send_text(message):
-    if message.text == '+':
-        bot.send_message(message.chat.id, 'Try to guess the player, according to his career')
-        text = "```" + str(gen_player()) + "```"
-        bot.send_message(message.chat.id, text, parse_mode="MarkdownV2")
+    reply = gen_player()
+    text = "```" + str(reply[0]) + "```"
+    bot.send_message(message.chat.id, text, reply_markup=user_markup, parse_mode="MarkdownV2")
 
+    variants = [reply[1]]
+    for i in range(3):
+        flag = True
+        while flag:
+            temp = choice(list(open('players.txt', encoding='utf-8'))).replace('\n', '')
+            random_player = " ".join(temp.split("_"))
+            if random_player not in variants:
+                variants.append(random_player)
+                flag = False
+
+    bot.send_poll(chat_id=message.chat.id, question="Try to guess the player, according to his career",
+                  is_anonymous=True, options=variants, type="quiz",
+                  correct_option_id=reply[1], reply_markup=user_markup,)
 
 bot.polling()
