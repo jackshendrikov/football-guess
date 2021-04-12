@@ -57,18 +57,16 @@ def process_data(res):
         if 'Senior career' in k:
             go_next, header = True, True
 
+    print(table)
     return table
 
 
-if html.getcode() == 200:
-    result = parse_html(html)
-    player_stat = process_data(result)
+def gen_player():
+    if html.getcode() == 200:
+        result = parse_html(html)
+        player_stat = process_data(result)
 
-    print(player_stat)
+        return player_stat
 
-    answer = input("\nYou wanna know answer? ")
-    if answer == "+":
-        print(random_player)
-
-elif html.getcode() == 404:
-    print("Page not found!")
+    elif html.getcode() == 404:
+        print("Page not found!")
