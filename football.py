@@ -64,7 +64,6 @@ def process_data(res):
 def gen_player():
     random_player = choice(list(open('players.txt', encoding='utf-8'))).replace('\n', '')
 
-
     url = 'https://en.wikipedia.org/wiki/' + urllib.parse.quote(random_player)
     html = urllib.request.urlopen(url, context=ctx)
 

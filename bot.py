@@ -3,7 +3,7 @@ import sqlite3
 
 from config import token
 from football import gen_player
-from leagues.pl_table import PL_TABLE
+from leagues.league_table import ChampionshipTable
 from random import choice
 
 
@@ -16,8 +16,8 @@ bot = telebot.TeleBot(token)
 def send_welcome(m):
     try:
         user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
-        user_markup.row('⚽ Football', 'ℹ️ Help')
-        user_markup.row('⚽ Start the game')
+        user_markup.row('⚽ Check Statistics', 'ℹ️ Help')
+        user_markup.row('⚽ Start the Game')
 
         db = sqlite3.connect("footballDB.sqlite")
         cursor = db.cursor()
@@ -64,8 +64,8 @@ def send_welcome(m):
 @bot.message_handler(regexp="👈 Main Menu")
 def main_menu(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
-    user_markup.row('⚽ Football', 'ℹ️ Help')
-    user_markup.row('⚽ Start the game')
+    user_markup.row('⚽ Check Statistics', 'ℹ️ Help')
+    user_markup.row('⚽ Start the Game')
 
     user_msg = 'Return to the main menu.\n\n'
     bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
@@ -81,7 +81,7 @@ def command_help(m):
 
 
 # football stat menu
-@bot.message_handler(regexp="⚽ Football")
+@bot.message_handler(regexp="⚽ Check Statistics")
 def send_football(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
 
@@ -123,15 +123,112 @@ def send_england(m):
 
 
 @bot.message_handler(regexp="⚽ Premier League Table")
-def send_pl_table(message):
-    user_msg = PL_TABLE
+def send_en_table(message):
+    url = "http://www.livescores.com/soccer/england/premier-league/"
+    user_msg = ChampionshipTable(url, table_width=9, table_height=21).create_table()
     bot.reply_to(message, user_msg)
 
-@bot.message_handler(regexp='⚽ Start the game')
+
+# Spanish La Liga
+@bot.message_handler(regexp="🇪🇸 Spain")
+def send_spain(m):
+    user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
+    user_markup.row('⚽ La Liga Table', '⚽ La Liga Scores')
+    user_markup.row('⚽ La Liga Results (Last Week)', '👈 Back')
+
+    user_msg = 'Spanish La Liga Table and Scores.\n\n'
+    bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
+                     parse_mode="Markdown", disable_web_page_preview="True")
+
+
+@bot.message_handler(regexp="⚽ La Liga Table")
+def send_es_table(message):
+    url = "http://www.livescores.com/soccer/spain/primera-division/"
+    user_msg = ChampionshipTable(url, table_width=9, table_height=21).create_table()
+    bot.reply_to(message, user_msg)
+
+
+# German Bundesliga
+@bot.message_handler(regexp="🇩🇪 Germany")
+def send_germany(m):
+    user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
+    user_markup.row('⚽ Bundesliga Table', '⚽ Bundesliga Scores')
+    user_markup.row('⚽ Bundesliga Results (Last Week)', '👈 Back')
+
+    user_msg = 'German Bundesliga Table and Scores.\n\n'
+    bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
+                     parse_mode="Markdown", disable_web_page_preview="True")
+
+
+@bot.message_handler(regexp="⚽ Bundesliga Table")
+def send_de_table(message):
+    url = "http://www.livescores.com/soccer/germany/bundesliga/"
+    user_msg = ChampionshipTable(url, table_width=9, table_height=19).create_table()
+    bot.reply_to(message, user_msg)
+
+
+# French Ligue 1
+@bot.message_handler(regexp="🇫🇷 France")
+def send_france(m):
+    user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
+    user_markup.row('⚽ Ligue 1 Table', '⚽ Ligue 1 Scores')
+    user_markup.row('⚽ Ligue 1 Results (Last Week)', '👈 Back')
+
+    user_msg = 'French Ligue 1 Table and Scores.\n\n'
+    bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
+                     parse_mode="Markdown", disable_web_page_preview="True")
+
+
+@bot.message_handler(regexp="⚽ Ligue 1 Table")
+def send_fr_table(message):
+    url = "http://www.livescores.com/soccer/france/ligue-1/"
+    user_msg = ChampionshipTable(url, table_width=9, table_height=21).create_table()
+    bot.reply_to(message, user_msg)
+
+
+# Italian Serie A
+@bot.message_handler(regexp="🇮🇹 Italy")
+def send_italy(m):
+    user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
+    user_markup.row('⚽ Serie A Table', '⚽ Serie A Scores')
+    user_markup.row('⚽ Serie A Results (Last Week)', '👈 Back')
+
+    user_msg = 'Italian Serie A Table and Scores.\n\n'
+    bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
+                     parse_mode="Markdown", disable_web_page_preview="True")
+
+
+@bot.message_handler(regexp="⚽ Serie A Table")
+def send_it_table(message):
+    url = "http://www.livescores.com/soccer/italy/serie-a/"
+    user_msg = ChampionshipTable(url, table_width=9, table_height=21).create_table()
+    bot.reply_to(message, user_msg)
+
+
+# Ukrainian Premier League
+@bot.message_handler(regexp="🇺🇦 Ukraine")
+def send_ukraine(m):
+    user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
+    user_markup.row('⚽ UPL Table', '⚽ UPL Scores')
+    user_markup.row('⚽ UPL Results (Last Week)', '👈 Back')
+
+    user_msg = 'Ukrainian Premier League Table and Scores.\n\n'
+    bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
+                     parse_mode="Markdown", disable_web_page_preview="True")
+
+
+@bot.message_handler(regexp="⚽ UPL Table")
+def send_ua_table(message):
+    url = "https://www.livescores.com/soccer/ukraine/premier-league/"
+    user_msg = ChampionshipTable(url, table_width=9, table_height=15).create_table()
+    bot.reply_to(message, user_msg)
+
+
+@bot.message_handler(regexp='⚽ Start the Game')
 def guessing_game(message):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
-    user_markup.row('⚽ Football', 'ℹ️ Help')
-    user_markup.row('⚽ Start the game')
+    user_markup.row('⚽ Check Statistics', 'ℹ️ Help')
+    user_markup.row('⚽ Start the Game')
 
     reply = gen_player()
     text = "```" + str(reply[0]) + "```"
@@ -150,5 +247,6 @@ def guessing_game(message):
     bot.send_poll(chat_id=message.chat.id, question="Try to guess the player, according to his career",
                   is_anonymous=True, options=variants, type="quiz",
                   correct_option_id=reply[1], reply_markup=user_markup,)
+
 
 bot.polling()
