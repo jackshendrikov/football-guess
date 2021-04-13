@@ -8,6 +8,7 @@ from datetime import date
 from football import gen_player
 from leagues.league_table import ChampionshipTable
 from leagues.league_scores import ChampionshipScores
+from leagues.league_latest import ChampionshipLatest
 
 
 # New Bot Instance
@@ -141,6 +142,14 @@ def send_en_scores(message):
     bot.reply_to(message, user_msg)
 
 
+# Premier League Results (Last Week)
+@bot.message_handler(regexp="⚽ Premier League Results (Last Week)")
+def send_en_latest(message):
+    url = "http://www.livescores.com/soccer/england/premier-league/results/7-days/"
+    user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=28).parse_latest()
+    bot.reply_to(message, user_msg)
+
+
 # ============== Spanish La Liga ==============
 @bot.message_handler(regexp="🇪🇸 Spain")
 def send_spain(m):
@@ -166,6 +175,14 @@ def send_es_table(message):
 def send_es_scores(message):
     url = "http://www.livescores.com/soccer/spain/primera-division/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
+    bot.reply_to(message, user_msg)
+
+
+# La Liga Results (Last Week)
+@bot.message_handler(regexp="⚽ La Liga Results (Last Week)")
+def send_es_latest(message):
+    url = "http://www.livescores.com/soccer/spain/primera-division/results/7-days/"
+    user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
     bot.reply_to(message, user_msg)
 
 
@@ -197,6 +214,14 @@ def send_de_scores(message):
     bot.reply_to(message, user_msg)
 
 
+# Bundesliga Results (Last Week)
+@bot.message_handler(regexp="⚽ Bundesliga Results (Last Week)")
+def send_de_latest(message):
+    url = "http://www.livescores.com/soccer/germany/bundesliga/results/7-days/"
+    user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
+    bot.reply_to(message, user_msg)
+
+
 # ============== French Ligue 1 ==============
 @bot.message_handler(regexp="🇫🇷 France")
 def send_france(m):
@@ -209,7 +234,7 @@ def send_france(m):
                      parse_mode="Markdown", disable_web_page_preview="True")
 
 
-# Ligue 1 Scores
+# Ligue 1 Table
 @bot.message_handler(regexp="⚽ Ligue 1 Table")
 def send_fr_table(message):
     url = "http://www.livescores.com/soccer/france/ligue-1/"
@@ -222,6 +247,14 @@ def send_fr_table(message):
 def send_fr_scores(message):
     url = "http://www.livescores.com/soccer/france/ligue-1/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
+    bot.reply_to(message, user_msg)
+
+
+# Ligue 1 Results (Last Week)
+@bot.message_handler(regexp="⚽ Ligue 1 Results (Last Week)")
+def send_fr_latest(message):
+    url = "http://www.livescores.com/soccer/france/ligue-1/results/7-days/"
+    user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
     bot.reply_to(message, user_msg)
 
 
@@ -253,6 +286,14 @@ def send_it_scores(message):
     bot.reply_to(message, user_msg)
 
 
+# Serie A Results (Last Week)
+@bot.message_handler(regexp="⚽ Serie A Results (Last Week)")
+def send_it_latest(message):
+    url = "http://www.livescores.com/soccer/italy/serie-a/results/7-days/"
+    user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
+    bot.reply_to(message, user_msg)
+
+
 # ============== Ukrainian Premier League ==============
 @bot.message_handler(regexp="🇺🇦 Ukraine")
 def send_ukraine(m):
@@ -275,13 +316,21 @@ def send_ua_table(message):
 
 # UPL Scores
 @bot.message_handler(regexp="⚽ UPL Scores")
-def send_it_scores(message):
+def send_ua_scores(message):
     url = "https://www.livescores.com/soccer/ukraine/premier-league/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
     bot.reply_to(message, user_msg)
 
 
-# Guess Player by his/her Statistics (Poll)
+# UPL Results (Last Week)
+@bot.message_handler(regexp="⚽ UPL Results (Last Week)")
+def send_ua_latest(message):
+    url = "http://www.livescores.com/soccer/ukraine/premier-league/results/7-days/"
+    user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=28).parse_latest()
+    bot.reply_to(message, user_msg)
+
+
+# ============== Guess Player by his/her Statistics (Poll) ==============
 @bot.message_handler(regexp='⚽ Start the Game')
 def guessing_game(message):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)

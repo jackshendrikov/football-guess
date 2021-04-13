@@ -32,11 +32,8 @@ class ChampionshipScores:
                 home_team = '-'.join(element.find("div", "tright").get_text().strip().split(" "))
                 away_team = '-'.join(element.find(attrs={"class": "ply name"}).get_text().strip().split(" "))
 
-                match_name = match_name_element.get('href').split('/')[4]
                 home_team_score = element.find("div", "sco").get_text().split("-")[0].strip()
                 away_team_score = element.find("div", "sco").get_text().split("-")[1].strip()
-
-                print(match_name)
 
                 scores.append("{} %s vs {} %s".format(home_team, away_team) % (home_team_score, away_team_score))
 
