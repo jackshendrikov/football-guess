@@ -2,16 +2,19 @@ import telebot
 import sqlite3
 
 from config import token
+from random import choice
+from datetime import date
+
 from football import gen_player
 from leagues.league_table import ChampionshipTable
-from random import choice
+from leagues.league_scores import ChampionshipScores
 
 
-# new bot instance
+# New Bot Instance
 bot = telebot.TeleBot(token)
 
 
-# welcome menu
+# Welcome Menu
 @bot.message_handler(commands=['start'])
 def send_welcome(m):
     try:
@@ -60,7 +63,7 @@ def send_welcome(m):
         print("Error occurred", error)
 
 
-# main menu
+# Main Menu
 @bot.message_handler(regexp="👈 Main Menu")
 def main_menu(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
@@ -72,7 +75,7 @@ def main_menu(m):
                      parse_mode="Markdown", disable_web_page_preview="True")
 
 
-# help menu
+# Help Menu
 @bot.message_handler(regexp="ℹ️ Help")
 def command_help(m):
     help_text = "*FootGuessr Bot* 🤖: Send a private message to one of my creators *@jackshen*, *@rudek0* " \
@@ -80,7 +83,7 @@ def command_help(m):
     bot.send_message(m.chat.id, help_text, parse_mode='Markdown', disable_web_page_preview="True")
 
 
-# football stat menu
+# Football Stat Menu
 @bot.message_handler(regexp="⚽ Check Statistics")
 def send_football(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
@@ -95,7 +98,7 @@ def send_football(m):
                      parse_mode="Markdown", disable_web_page_preview="True")
 
 
-# back to Main Football Menu
+# Back to Main Football Menu
 @bot.message_handler(regexp="👈 Back")
 def football_back(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
@@ -110,7 +113,7 @@ def football_back(m):
                      parse_mode="Markdown", disable_web_page_preview="True")
 
 
-# English Premier League
+# ============== English Premier League ==============
 @bot.message_handler(regexp="🏴󠁧󠁢󠁥󠁮󠁧󠁿󠁧󠁢󠁥󠁮󠁧󠁿 England")
 def send_england(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
@@ -122,6 +125,7 @@ def send_england(m):
                      parse_mode="Markdown", disable_web_page_preview="True")
 
 
+# Premier League Table
 @bot.message_handler(regexp="⚽ Premier League Table")
 def send_en_table(message):
     url = "http://www.livescores.com/soccer/england/premier-league/"
@@ -129,7 +133,15 @@ def send_en_table(message):
     bot.reply_to(message, user_msg)
 
 
-# Spanish La Liga
+# Premier League Scores
+@bot.message_handler(regexp="⚽ Premier League Scores")
+def send_en_scores(message):
+    url = "http://www.livescores.com/soccer/england/premier-league/"
+    user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
+    bot.reply_to(message, user_msg)
+
+
+# ============== Spanish La Liga ==============
 @bot.message_handler(regexp="🇪🇸 Spain")
 def send_spain(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
@@ -141,6 +153,7 @@ def send_spain(m):
                      parse_mode="Markdown", disable_web_page_preview="True")
 
 
+# La Liga Table
 @bot.message_handler(regexp="⚽ La Liga Table")
 def send_es_table(message):
     url = "http://www.livescores.com/soccer/spain/primera-division/"
@@ -148,7 +161,15 @@ def send_es_table(message):
     bot.reply_to(message, user_msg)
 
 
-# German Bundesliga
+# La Liga Scores
+@bot.message_handler(regexp="⚽ La Liga Scores")
+def send_es_scores(message):
+    url = "http://www.livescores.com/soccer/spain/primera-division/"
+    user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
+    bot.reply_to(message, user_msg)
+
+
+# ============== German Bundesliga ==============
 @bot.message_handler(regexp="🇩🇪 Germany")
 def send_germany(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
@@ -160,6 +181,7 @@ def send_germany(m):
                      parse_mode="Markdown", disable_web_page_preview="True")
 
 
+# Bundesliga Table
 @bot.message_handler(regexp="⚽ Bundesliga Table")
 def send_de_table(message):
     url = "http://www.livescores.com/soccer/germany/bundesliga/"
@@ -167,7 +189,15 @@ def send_de_table(message):
     bot.reply_to(message, user_msg)
 
 
-# French Ligue 1
+# Bundesliga Scores
+@bot.message_handler(regexp="⚽ Bundesliga Scores")
+def send_de_scores(message):
+    url = "http://www.livescores.com/soccer/germany/bundesliga/"
+    user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
+    bot.reply_to(message, user_msg)
+
+
+# ============== French Ligue 1 ==============
 @bot.message_handler(regexp="🇫🇷 France")
 def send_france(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
@@ -179,6 +209,7 @@ def send_france(m):
                      parse_mode="Markdown", disable_web_page_preview="True")
 
 
+# Ligue 1 Scores
 @bot.message_handler(regexp="⚽ Ligue 1 Table")
 def send_fr_table(message):
     url = "http://www.livescores.com/soccer/france/ligue-1/"
@@ -186,7 +217,15 @@ def send_fr_table(message):
     bot.reply_to(message, user_msg)
 
 
-# Italian Serie A
+# Ligue 1 Scores
+@bot.message_handler(regexp="⚽ Ligue 1 Scores")
+def send_fr_scores(message):
+    url = "http://www.livescores.com/soccer/france/ligue-1/"
+    user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
+    bot.reply_to(message, user_msg)
+
+
+# ============== Italian Serie A ==============
 @bot.message_handler(regexp="🇮🇹 Italy")
 def send_italy(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
@@ -198,6 +237,7 @@ def send_italy(m):
                      parse_mode="Markdown", disable_web_page_preview="True")
 
 
+# Serie A Table
 @bot.message_handler(regexp="⚽ Serie A Table")
 def send_it_table(message):
     url = "http://www.livescores.com/soccer/italy/serie-a/"
@@ -205,7 +245,15 @@ def send_it_table(message):
     bot.reply_to(message, user_msg)
 
 
-# Ukrainian Premier League
+# Serie A Scores
+@bot.message_handler(regexp="⚽ Serie A Scores")
+def send_it_scores(message):
+    url = "http://www.livescores.com/soccer/italy/serie-a/"
+    user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
+    bot.reply_to(message, user_msg)
+
+
+# ============== Ukrainian Premier League ==============
 @bot.message_handler(regexp="🇺🇦 Ukraine")
 def send_ukraine(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
@@ -217,6 +265,7 @@ def send_ukraine(m):
                      parse_mode="Markdown", disable_web_page_preview="True")
 
 
+# UPL Table
 @bot.message_handler(regexp="⚽ UPL Table")
 def send_ua_table(message):
     url = "https://www.livescores.com/soccer/ukraine/premier-league/"
@@ -224,6 +273,15 @@ def send_ua_table(message):
     bot.reply_to(message, user_msg)
 
 
+# UPL Scores
+@bot.message_handler(regexp="⚽ UPL Scores")
+def send_it_scores(message):
+    url = "https://www.livescores.com/soccer/ukraine/premier-league/"
+    user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
+    bot.reply_to(message, user_msg)
+
+
+# Guess Player by his/her Statistics (Poll)
 @bot.message_handler(regexp='⚽ Start the Game')
 def guessing_game(message):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
