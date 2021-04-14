@@ -138,7 +138,7 @@ def send_en_table(message):
 @bot.message_handler(regexp="⚽ Premier League Upcoming Events")
 def send_en_scores(message):
     url = "http://www.livescores.com/soccer/england/premier-league/"
-    user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
+    user_msg = ChampionshipScores(url).scrape_score()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -146,7 +146,7 @@ def send_en_scores(message):
 @bot.message_handler(regexp="⚽ Premier League Latest Results")
 def send_en_latest(message):
     url = "http://www.livescores.com/soccer/england/premier-league/results/7-days/"
-    user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=28).parse_latest()
+    user_msg = ChampionshipLatest(url, width=28).parse_latest()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -174,7 +174,7 @@ def send_es_table(message):
 @bot.message_handler(regexp="⚽ La Liga Upcoming Events")
 def send_es_scores(message):
     url = "http://www.livescores.com/soccer/spain/primera-division/"
-    user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
+    user_msg = ChampionshipScores(url).scrape_score()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -182,7 +182,7 @@ def send_es_scores(message):
 @bot.message_handler(regexp="⚽ La Liga Latest Results")
 def send_es_latest(message):
     url = "http://www.livescores.com/soccer/spain/primera-division/results/7-days/"
-    user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
+    user_msg = ChampionshipLatest(url, width=35).parse_latest()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -210,7 +210,7 @@ def send_de_table(message):
 @bot.message_handler(regexp="⚽ Bundesliga Upcoming Events")
 def send_de_scores(message):
     url = "http://www.livescores.com/soccer/germany/bundesliga/"
-    user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
+    user_msg = ChampionshipScores(url).scrape_score()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -218,7 +218,7 @@ def send_de_scores(message):
 @bot.message_handler(regexp="⚽ Bundesliga Latest Results")
 def send_de_latest(message):
     url = "http://www.livescores.com/soccer/germany/bundesliga/results/7-days/"
-    user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
+    user_msg = ChampionshipLatest(url, width=35).parse_latest()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -246,7 +246,7 @@ def send_fr_table(message):
 @bot.message_handler(regexp="⚽ Ligue 1 Upcoming Events")
 def send_fr_scores(message):
     url = "http://www.livescores.com/soccer/france/ligue-1/"
-    user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
+    user_msg = ChampionshipScores(url).scrape_score()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -254,7 +254,7 @@ def send_fr_scores(message):
 @bot.message_handler(regexp="⚽ Ligue 1 Latest Results")
 def send_fr_latest(message):
     url = "http://www.livescores.com/soccer/france/ligue-1/results/7-days/"
-    user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
+    user_msg = ChampionshipLatest(url, width=35).parse_latest()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -282,7 +282,7 @@ def send_it_table(message):
 @bot.message_handler(regexp="⚽ Serie A Upcoming Events")
 def send_it_scores(message):
     url = "http://www.livescores.com/soccer/italy/serie-a/"
-    user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
+    user_msg = ChampionshipScores(url).scrape_score()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -290,7 +290,7 @@ def send_it_scores(message):
 @bot.message_handler(regexp="⚽ Serie A Latest Results")
 def send_it_latest(message):
     url = "http://www.livescores.com/soccer/italy/serie-a/results/7-days/"
-    user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
+    user_msg = ChampionshipLatest(url, width=35).parse_latest()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -318,7 +318,7 @@ def send_ua_table(message):
 @bot.message_handler(regexp="⚽ UPL Upcoming Events")
 def send_ua_scores(message):
     url = "https://www.livescores.com/soccer/ukraine/premier-league/"
-    user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
+    user_msg = ChampionshipScores(url).scrape_score()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -326,7 +326,7 @@ def send_ua_scores(message):
 @bot.message_handler(regexp="⚽ UPL Latest Results")
 def send_ua_latest(message):
     url = "http://www.livescores.com/soccer/ukraine/premier-league/results/7-days/"
-    user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=28).parse_latest()
+    user_msg = ChampionshipLatest(url, width=28).parse_latest()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 

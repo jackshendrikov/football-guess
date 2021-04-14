@@ -3,6 +3,7 @@
 import requests
 
 from bs4 import BeautifulSoup
+from texttable import Texttable
 from leagues.utils import shorten_name
 
 
@@ -20,23 +21,25 @@ class ChampionshipScores:
         page = requests.get(self.url)
         parsed_markup = BeautifulSoup(page.text, "html.parser")
 
-        # dictionary to contain scores
-        scores = []
+        # final version of the table to send to the user
+        scores = Texttable()
+
+        # settings for table
+        scores.set_cols_width([10, 1, 10])
+        scores.set_cols_align(['l', 'c', 'r'])  # c - center align (horizontal), l - left, r - right
+        scores.set_cols_valign(['m', 'm', 'm'])  # m - middle align (vertical)
+        scores.set_chars(['—', '|', '+', '='])  # replace dash with em dash
+        scores.header(["Home Team", "", "Away Team"])
 
         # scrape needed data from the parsed markup
         for element in parsed_markup.find_all("div", "row-gray"):
 
             match_name_element = element.find(attrs={"class": "scorelink"})
 
-            if match_name_element is not None:
-                # this means the match is about to be played
-
+            if match_name_element is not None and element.find("div", "sco").get_text().split("-")[0].strip() == "?":
                 home_team = shorten_name(' '.join(element.find("div", "tright").get_text().strip().split(" ")))
                 away_team = shorten_name(' '.join(element.find(attrs={"class": "ply name"}).get_text().strip().split(" ")))
 
-                home_team_score = element.find("div", "sco").get_text().split("-")[0].strip()
-                away_team_score = element.find("div", "sco").get_text().split("-")[1].strip()
+                scores.add_row([home_team, "-", away_team])
 
-                scores.append("{} %s vs {} %s".format(home_team, away_team) % (home_team_score, away_team_score))
-
-        return '\n'.join(scores)
+        return '`' + scores.draw() + '`'
