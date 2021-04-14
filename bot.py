@@ -118,8 +118,8 @@ def football_back(m):
 @bot.message_handler(regexp="🏴󠁧󠁢󠁥󠁮󠁧󠁿󠁧󠁢󠁥󠁮󠁧󠁿 England")
 def send_england(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
-    user_markup.row('⚽ Premier League Table', '⚽ Premier League Scores')
-    user_markup.row('⚽ Premier League Results (Last Week)', '👈 Back')
+    user_markup.row('⚽ Premier League Table', '⚽ Premier League Latest Upcoming Events')
+    user_markup.row('⚽ Premier League Latest Results', '👈 Back')
 
     user_msg = 'English Premier League Table and Scores.\n\n'
     bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
@@ -135,7 +135,7 @@ def send_en_table(message):
 
 
 # Premier League Scores
-@bot.message_handler(regexp="⚽ Premier League Scores")
+@bot.message_handler(regexp="⚽ Premier League Upcoming Events")
 def send_en_scores(message):
     url = "http://www.livescores.com/soccer/england/premier-league/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
@@ -143,7 +143,7 @@ def send_en_scores(message):
 
 
 # Premier League Results (Last Week)
-@bot.message_handler(regexp="⚽ Premier League Results (Last Week)")
+@bot.message_handler(regexp="⚽ Premier League Latest Results")
 def send_en_latest(message):
     url = "http://www.livescores.com/soccer/england/premier-league/results/7-days/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=28).parse_latest()
@@ -154,8 +154,8 @@ def send_en_latest(message):
 @bot.message_handler(regexp="🇪🇸 Spain")
 def send_spain(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
-    user_markup.row('⚽ La Liga Table', '⚽ La Liga Scores')
-    user_markup.row('⚽ La Liga Results (Last Week)', '👈 Back')
+    user_markup.row('⚽ La Liga Table', '⚽ La Liga Upcoming Events')
+    user_markup.row('⚽ La Liga Latest Results', '👈 Back')
 
     user_msg = 'Spanish La Liga Table and Scores.\n\n'
     bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
@@ -171,7 +171,7 @@ def send_es_table(message):
 
 
 # La Liga Scores
-@bot.message_handler(regexp="⚽ La Liga Scores")
+@bot.message_handler(regexp="⚽ La Liga Upcoming Events")
 def send_es_scores(message):
     url = "http://www.livescores.com/soccer/spain/primera-division/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
@@ -179,7 +179,7 @@ def send_es_scores(message):
 
 
 # La Liga Results (Last Week)
-@bot.message_handler(regexp="⚽ La Liga Results (Last Week)")
+@bot.message_handler(regexp="⚽ La Liga Latest Results")
 def send_es_latest(message):
     url = "http://www.livescores.com/soccer/spain/primera-division/results/7-days/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
@@ -190,8 +190,8 @@ def send_es_latest(message):
 @bot.message_handler(regexp="🇩🇪 Germany")
 def send_germany(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
-    user_markup.row('⚽ Bundesliga Table', '⚽ Bundesliga Scores')
-    user_markup.row('⚽ Bundesliga Results (Last Week)', '👈 Back')
+    user_markup.row('⚽ Bundesliga Table', '⚽ Bundesliga Upcoming Events')
+    user_markup.row('⚽ Bundesliga Latest Results', '👈 Back')
 
     user_msg = 'German Bundesliga Table and Scores.\n\n'
     bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
@@ -207,7 +207,7 @@ def send_de_table(message):
 
 
 # Bundesliga Scores
-@bot.message_handler(regexp="⚽ Bundesliga Scores")
+@bot.message_handler(regexp="⚽ Bundesliga Upcoming Events")
 def send_de_scores(message):
     url = "http://www.livescores.com/soccer/germany/bundesliga/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
@@ -215,7 +215,7 @@ def send_de_scores(message):
 
 
 # Bundesliga Results (Last Week)
-@bot.message_handler(regexp="⚽ Bundesliga Results (Last Week)")
+@bot.message_handler(regexp="⚽ Bundesliga Latest Results")
 def send_de_latest(message):
     url = "http://www.livescores.com/soccer/germany/bundesliga/results/7-days/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
@@ -226,8 +226,8 @@ def send_de_latest(message):
 @bot.message_handler(regexp="🇫🇷 France")
 def send_france(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
-    user_markup.row('⚽ Ligue 1 Table', '⚽ Ligue 1 Scores')
-    user_markup.row('⚽ Ligue 1 Results (Last Week)', '👈 Back')
+    user_markup.row('⚽ Ligue 1 Table', '⚽ Ligue 1 Upcoming Events')
+    user_markup.row('⚽ Ligue 1 Latest Results', '👈 Back')
 
     user_msg = 'French Ligue 1 Table and Scores.\n\n'
     bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
@@ -243,7 +243,7 @@ def send_fr_table(message):
 
 
 # Ligue 1 Scores
-@bot.message_handler(regexp="⚽ Ligue 1 Scores")
+@bot.message_handler(regexp="⚽ Ligue 1 Upcoming Events")
 def send_fr_scores(message):
     url = "http://www.livescores.com/soccer/france/ligue-1/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
@@ -251,7 +251,7 @@ def send_fr_scores(message):
 
 
 # Ligue 1 Results (Last Week)
-@bot.message_handler(regexp="⚽ Ligue 1 Results (Last Week)")
+@bot.message_handler(regexp="⚽ Ligue 1 Latest Results")
 def send_fr_latest(message):
     url = "http://www.livescores.com/soccer/france/ligue-1/results/7-days/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
@@ -262,8 +262,8 @@ def send_fr_latest(message):
 @bot.message_handler(regexp="🇮🇹 Italy")
 def send_italy(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
-    user_markup.row('⚽ Serie A Table', '⚽ Serie A Scores')
-    user_markup.row('⚽ Serie A Results (Last Week)', '👈 Back')
+    user_markup.row('⚽ Serie A Table', '⚽ Serie A Upcoming Events')
+    user_markup.row('⚽ Serie A Latest Results', '👈 Back')
 
     user_msg = 'Italian Serie A Table and Scores.\n\n'
     bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
@@ -279,7 +279,7 @@ def send_it_table(message):
 
 
 # Serie A Scores
-@bot.message_handler(regexp="⚽ Serie A Scores")
+@bot.message_handler(regexp="⚽ Serie A Upcoming Events")
 def send_it_scores(message):
     url = "http://www.livescores.com/soccer/italy/serie-a/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
@@ -287,7 +287,7 @@ def send_it_scores(message):
 
 
 # Serie A Results (Last Week)
-@bot.message_handler(regexp="⚽ Serie A Results (Last Week)")
+@bot.message_handler(regexp="⚽ Serie A Latest Results")
 def send_it_latest(message):
     url = "http://www.livescores.com/soccer/italy/serie-a/results/7-days/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
@@ -298,8 +298,8 @@ def send_it_latest(message):
 @bot.message_handler(regexp="🇺🇦 Ukraine")
 def send_ukraine(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
-    user_markup.row('⚽ UPL Table', '⚽ UPL Scores')
-    user_markup.row('⚽ UPL Results (Last Week)', '👈 Back')
+    user_markup.row('⚽ UPL Table', '⚽ UPL Upcoming Events')
+    user_markup.row('⚽ UPL Latest Results', '👈 Back')
 
     user_msg = 'Ukrainian Premier League Table and Scores.\n\n'
     bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
@@ -315,7 +315,7 @@ def send_ua_table(message):
 
 
 # UPL Scores
-@bot.message_handler(regexp="⚽ UPL Scores")
+@bot.message_handler(regexp="⚽ UPL Upcoming Events")
 def send_ua_scores(message):
     url = "https://www.livescores.com/soccer/ukraine/premier-league/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
@@ -323,7 +323,7 @@ def send_ua_scores(message):
 
 
 # UPL Results (Last Week)
-@bot.message_handler(regexp="⚽ UPL Results (Last Week)")
+@bot.message_handler(regexp="⚽ UPL Latest Results")
 def send_ua_latest(message):
     url = "http://www.livescores.com/soccer/ukraine/premier-league/results/7-days/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=28).parse_latest()

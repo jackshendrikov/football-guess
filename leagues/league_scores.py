@@ -18,7 +18,7 @@ class ChampionshipScores:
     def scrape_score(self):
         """ Scrape web page, retrieve necessary data, format it and return to the user """
         page = requests.get(self.url)
-        parsed_markup = BeautifulSoup(page.text,"html.parser")
+        parsed_markup = BeautifulSoup(page.text, "html.parser")
 
         # dictionary to contain scores
         scores = []

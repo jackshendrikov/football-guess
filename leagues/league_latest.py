@@ -8,10 +8,13 @@ from leagues.utils import shorten_name
 
 def scrape_page(url):
     """ Scrape certain web-page, find and retrieve the necessary tags """
+    print("Trying to retrieve web page...")
+
     page = requests.get(url)
     soup = BeautifulSoup(page.text, "lxml")
 
     games = soup.findAll("div", {"class": "row-gray"})
+    print("Retrieve successful!")
 
     return games
 
@@ -32,6 +35,6 @@ class ChampionshipLatest:
         scores = [shorten_name(game.text) for game in games]
 
         if len(scores) == 0:
-            return "I cann't find any score at {0}".format(self.url)
+            return "I can't find any score at {0}".format(self.url)
         else:
             return '*' * (self.width + 4) + "{0}".format("\n".join(scores)) + '*' * (self.width + 4)
