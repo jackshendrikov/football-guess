@@ -12,4 +12,4 @@ shorten_teams = dict([('Brighton & Hove Albion', 'Brighton'), ('Tottenham Hotspu
 
 def shorten_name(team):
     return shorten_teams[team] if team in shorten_teams.keys() else \
-        team.replace('United', 'Utd').replace('Manchester', 'Man.')
+        team.replace('United', 'Utd').replace('Manchester', 'Man.').replace("FT", "")

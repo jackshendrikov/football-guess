@@ -146,7 +146,7 @@ def send_en_scores(message):
 @bot.message_handler(regexp="⚽ Premier League Latest Results")
 def send_en_latest(message):
     url = "http://www.livescores.com/soccer/england/premier-league/results/7-days/"
-    user_msg = ChampionshipLatest(url, width=28).parse_latest()
+    user_msg = ChampionshipLatest(url).parse_latest()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -182,7 +182,7 @@ def send_es_scores(message):
 @bot.message_handler(regexp="⚽ La Liga Latest Results")
 def send_es_latest(message):
     url = "http://www.livescores.com/soccer/spain/primera-division/results/7-days/"
-    user_msg = ChampionshipLatest(url, width=35).parse_latest()
+    user_msg = ChampionshipLatest(url).parse_latest()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -218,7 +218,7 @@ def send_de_scores(message):
 @bot.message_handler(regexp="⚽ Bundesliga Latest Results")
 def send_de_latest(message):
     url = "http://www.livescores.com/soccer/germany/bundesliga/results/7-days/"
-    user_msg = ChampionshipLatest(url, width=35).parse_latest()
+    user_msg = ChampionshipLatest(url).parse_latest()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -254,7 +254,7 @@ def send_fr_scores(message):
 @bot.message_handler(regexp="⚽ Ligue 1 Latest Results")
 def send_fr_latest(message):
     url = "http://www.livescores.com/soccer/france/ligue-1/results/7-days/"
-    user_msg = ChampionshipLatest(url, width=35).parse_latest()
+    user_msg = ChampionshipLatest(url).parse_latest()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -290,7 +290,7 @@ def send_it_scores(message):
 @bot.message_handler(regexp="⚽ Serie A Latest Results")
 def send_it_latest(message):
     url = "http://www.livescores.com/soccer/italy/serie-a/results/7-days/"
-    user_msg = ChampionshipLatest(url, width=35).parse_latest()
+    user_msg = ChampionshipLatest(url).parse_latest()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
@@ -326,7 +326,7 @@ def send_ua_scores(message):
 @bot.message_handler(regexp="⚽ UPL Latest Results")
 def send_ua_latest(message):
     url = "http://www.livescores.com/soccer/ukraine/premier-league/results/7-days/"
-    user_msg = ChampionshipLatest(url, width=28).parse_latest()
+    user_msg = ChampionshipLatest(url).parse_latest()
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
