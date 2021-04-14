@@ -118,7 +118,7 @@ def football_back(m):
 @bot.message_handler(regexp="🏴󠁧󠁢󠁥󠁮󠁧󠁿󠁧󠁢󠁥󠁮󠁧󠁿 England")
 def send_england(m):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
-    user_markup.row('⚽ Premier League Table', '⚽ Premier League Latest Upcoming Events')
+    user_markup.row('⚽ Premier League Table', '⚽ Premier League Upcoming Events')
     user_markup.row('⚽ Premier League Latest Results', '👈 Back')
 
     user_msg = 'English Premier League Table and Scores.\n\n'
