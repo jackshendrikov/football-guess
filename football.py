@@ -25,8 +25,6 @@ def parse_html(page):
                 if len(title) < 20:
                     result.append((title, '|'.join(info)))
     except AttributeError:
-        print("Error with ", random_player)
-        print(soup)
         result.append(("Unexpected error", "error"))
 
     print(result)
