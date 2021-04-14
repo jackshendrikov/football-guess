@@ -47,6 +47,7 @@ class ChampionshipTable:
         res_table.set_cols_width([2, 15, 4])
         res_table.set_cols_align(['c', 'l', 'c'])   # c - center align (horizontal)
         res_table.set_cols_valign(['m', 'm', 'm'])  # m - middle align (vertical)
+        res_table.set_chars(['—', '|', '+', '='])   # replace dash with em dash
 
         # get team names and corresponding points
         team, pts = scrape_page(self.url)
@@ -65,4 +66,4 @@ class ChampionshipTable:
             if x == 0:  res_table.header(['#', date.today(), "Pts"])
             else: res_table.add_row([x, teamInfo[x][0], teamInfo[x][8]])
 
-        return '`' + res_table.draw().replace('-', '—') + '`'
+        return '`' + res_table.draw() + '`'
