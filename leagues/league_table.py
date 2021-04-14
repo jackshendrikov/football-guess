@@ -4,6 +4,8 @@ import requests
 
 from bs4 import BeautifulSoup
 from leagues.utils import shorten_name
+from texttable import Texttable
+from datetime import date
 
 
 def scrape_page(url):
@@ -39,13 +41,18 @@ class ChampionshipTable:
         teamInfo = [[0 for x in range(self.table_width)] for y in range(self.table_height)]
 
         # final version of the table to send to the user
-        res_table = []
+        res_table = Texttable()
+
+        # settings for table
+        res_table.set_cols_width([2, 15, 4])
+        res_table.set_cols_align(['c', 'l', 'c'])   # c - center align (horizontal)
+        res_table.set_cols_valign(['m', 'm', 'm'])  # m - middle align (vertical)
 
         # get team names and corresponding points
         team, pts = scrape_page(self.url)
 
         if not team or not pts:
-            res_table.append("%-*s %s" % (5, "Empty Table", "Empty Table"))
+            res_table.add_row(["?", "Empty Table", "?"])
         else:
             z = 0
             for x in range(0, self.table_height):
@@ -55,6 +62,7 @@ class ChampionshipTable:
                     z += 1
 
         for x in range(0, self.table_height):
-            res_table.append("|{0:^5}|{1:^30}|{2:^4}|".format(x + 1, teamInfo[x][0], teamInfo[x][8]))
+            if x == 0:  res_table.header(['#', date.today(), "Pts"])
+            else: res_table.add_row([x, teamInfo[x][0], teamInfo[x][8]])
 
-        return '\n'.join(res_table)
+        return '`' + res_table.draw().replace('-', '—') + '`'

@@ -4,9 +4,10 @@ shorten_teams = dict([('Brighton & Hove Albion', 'Brighton'), ('Tottenham Hotspu
                       ('Paris Saint-Germain', 'PSG'), ('RasenBallsport Leipzig', 'RB Leipzig'),
                       ('Eintracht Frankfurt', 'Eintracht'), ('Borussia Dortmund', 'Borussia D'),
                       ('Bayer Leverkusen', 'Bayer'), ('Borussia Moenchengladbach', 'Borussia M'),
-                      ('1. FC Köln', 'FC Köln'), ('Arminia Bielefeld', 'Arminia'), ('Werder Bremen', 'Werder'),
+                      ('1. FC KÃ¶ln', 'FC Köln'), ('Arminia Bielefeld', 'Arminia'), ('Werder Bremen', 'Werder'),
                       ('Hertha Berlin', 'Hertha'), ('FC Kolos Kovalivka', 'FC Kolos'),
-                      ('Inhulets Petrove', 'Inhulets'), ('Rukh Vynnyky', 'Rukh')])
+                      ('Inhulets Petrove', 'Inhulets'), ('Rukh Vynnyky', 'Rukh'), ('Leicester City', 'Leicester'),
+                      ('Shakhtar Donetsk', 'Shakhtar')])
 
 
 def shorten_name(team):

@@ -131,7 +131,7 @@ def send_england(m):
 def send_en_table(message):
     url = "http://www.livescores.com/soccer/england/premier-league/"
     user_msg = ChampionshipTable(url, table_width=9, table_height=21).create_table()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # Premier League Scores
@@ -139,7 +139,7 @@ def send_en_table(message):
 def send_en_scores(message):
     url = "http://www.livescores.com/soccer/england/premier-league/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # Premier League Results (Last Week)
@@ -147,7 +147,7 @@ def send_en_scores(message):
 def send_en_latest(message):
     url = "http://www.livescores.com/soccer/england/premier-league/results/7-days/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=28).parse_latest()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # ============== Spanish La Liga ==============
@@ -167,7 +167,7 @@ def send_spain(m):
 def send_es_table(message):
     url = "http://www.livescores.com/soccer/spain/primera-division/"
     user_msg = ChampionshipTable(url, table_width=9, table_height=21).create_table()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # La Liga Scores
@@ -175,7 +175,7 @@ def send_es_table(message):
 def send_es_scores(message):
     url = "http://www.livescores.com/soccer/spain/primera-division/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # La Liga Results (Last Week)
@@ -183,7 +183,7 @@ def send_es_scores(message):
 def send_es_latest(message):
     url = "http://www.livescores.com/soccer/spain/primera-division/results/7-days/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # ============== German Bundesliga ==============
@@ -203,7 +203,7 @@ def send_germany(m):
 def send_de_table(message):
     url = "http://www.livescores.com/soccer/germany/bundesliga/"
     user_msg = ChampionshipTable(url, table_width=9, table_height=19).create_table()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # Bundesliga Scores
@@ -211,7 +211,7 @@ def send_de_table(message):
 def send_de_scores(message):
     url = "http://www.livescores.com/soccer/germany/bundesliga/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # Bundesliga Results (Last Week)
@@ -219,7 +219,7 @@ def send_de_scores(message):
 def send_de_latest(message):
     url = "http://www.livescores.com/soccer/germany/bundesliga/results/7-days/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # ============== French Ligue 1 ==============
@@ -239,7 +239,7 @@ def send_france(m):
 def send_fr_table(message):
     url = "http://www.livescores.com/soccer/france/ligue-1/"
     user_msg = ChampionshipTable(url, table_width=9, table_height=21).create_table()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # Ligue 1 Scores
@@ -247,7 +247,7 @@ def send_fr_table(message):
 def send_fr_scores(message):
     url = "http://www.livescores.com/soccer/france/ligue-1/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # Ligue 1 Results (Last Week)
@@ -255,7 +255,7 @@ def send_fr_scores(message):
 def send_fr_latest(message):
     url = "http://www.livescores.com/soccer/france/ligue-1/results/7-days/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # ============== Italian Serie A ==============
@@ -275,7 +275,7 @@ def send_italy(m):
 def send_it_table(message):
     url = "http://www.livescores.com/soccer/italy/serie-a/"
     user_msg = ChampionshipTable(url, table_width=9, table_height=21).create_table()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # Serie A Scores
@@ -283,7 +283,7 @@ def send_it_table(message):
 def send_it_scores(message):
     url = "http://www.livescores.com/soccer/italy/serie-a/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # Serie A Results (Last Week)
@@ -291,7 +291,7 @@ def send_it_scores(message):
 def send_it_latest(message):
     url = "http://www.livescores.com/soccer/italy/serie-a/results/7-days/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=35).parse_latest()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # ============== Ukrainian Premier League ==============
@@ -311,7 +311,7 @@ def send_ukraine(m):
 def send_ua_table(message):
     url = "https://www.livescores.com/soccer/ukraine/premier-league/"
     user_msg = ChampionshipTable(url, table_width=9, table_height=15).create_table()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # UPL Scores
@@ -319,7 +319,7 @@ def send_ua_table(message):
 def send_ua_scores(message):
     url = "https://www.livescores.com/soccer/ukraine/premier-league/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipScores(url).scrape_score()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # UPL Results (Last Week)
@@ -327,7 +327,7 @@ def send_ua_scores(message):
 def send_ua_latest(message):
     url = "http://www.livescores.com/soccer/ukraine/premier-league/results/7-days/"
     user_msg = str(date.today()) + "\n\n" + ChampionshipLatest(url, width=28).parse_latest()
-    bot.reply_to(message, user_msg)
+    bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
 # ============== Guess Player by his/her Statistics (Poll) ==============
