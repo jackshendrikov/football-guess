@@ -1,13 +1,15 @@
 """ This module defines all of work with scores of commands of specific league for the last week """
 
+import requests
+
 from bs4 import BeautifulSoup
-from urllib.request import urlopen
+from leagues.utils import shorten_name
 
 
 def scrape_page(url):
     """ Scrape certain web-page, find and retrieve the necessary tags """
-    page = urlopen(url)
-    soup = BeautifulSoup(page, "lxml")
+    page = requests.get(url)
+    soup = BeautifulSoup(page.text, "lxml")
 
     games = soup.findAll("div", {"class": "row-gray"})
 
@@ -27,7 +29,7 @@ class ChampionshipLatest:
     def parse_latest(self):
         """ Parse necessary data, format it and return to the user """
         games = scrape_page(self.url)
-        scores = [game.text for game in games]
+        scores = [shorten_name(game.text) for game in games]
 
         if len(scores) == 0:
             return "I cann't find any score at {0}".format(self.url)

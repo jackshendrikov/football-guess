@@ -1,16 +1,21 @@
 """ This module defines all of work with current tables of specific league """
 
+import requests
+
 from bs4 import BeautifulSoup
-from urllib.request import urlopen
+from leagues.utils import shorten_name
 
 
 def scrape_page(url):
     """ Scrape certain web-page, find and retrieve the necessary tags """
-    page = urlopen(url)
-    soup = BeautifulSoup(page, "lxml")
+    print("Trying to retrieve web page...")
+    page = requests.get(url)
+    soup = BeautifulSoup(page.text, "lxml")
 
     team = soup.findAll("div", {"class": "team"})
     pts = soup.findAll("div", {"class": "pts"})
+
+    print("Retrieve successful!")
 
     return team, pts
 
@@ -44,12 +49,12 @@ class ChampionshipTable:
         else:
             z = 0
             for x in range(0, self.table_height):
-                teamInfo[x][0] = team[x].text
+                teamInfo[x][0] = shorten_name(team[x].text)
                 for y in range(1, self.table_width):
                     teamInfo[x][y] = pts[z].text
                     z += 1
 
         for x in range(0, self.table_height):
-            res_table.append("%-*s %s" % (5, teamInfo[x][8], teamInfo[x][0]))
+            res_table.append("|{0:^5}|{1:^30}|{2:^4}|".format(x + 1, teamInfo[x][0], teamInfo[x][8]))
 
         return '\n'.join(res_table)

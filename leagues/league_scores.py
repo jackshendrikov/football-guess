@@ -1,7 +1,9 @@
 """ This module defines all of work with current scores of commands of specific league """
 
+import requests
+
 from bs4 import BeautifulSoup
-from urllib.request import urlopen
+from leagues.utils import shorten_name
 
 
 class ChampionshipScores:
@@ -15,8 +17,8 @@ class ChampionshipScores:
 
     def scrape_score(self):
         """ Scrape web page, retrieve necessary data, format it and return to the user """
-        page = urlopen(self.url)
-        parsed_markup = BeautifulSoup(page, "html.parser")
+        page = requests.get(self.url)
+        parsed_markup = BeautifulSoup(page.text,"html.parser")
 
         # dictionary to contain scores
         scores = []
@@ -29,8 +31,8 @@ class ChampionshipScores:
             if match_name_element is not None:
                 # this means the match is about to be played
 
-                home_team = '-'.join(element.find("div", "tright").get_text().strip().split(" "))
-                away_team = '-'.join(element.find(attrs={"class": "ply name"}).get_text().strip().split(" "))
+                home_team = shorten_name(' '.join(element.find("div", "tright").get_text().strip().split(" ")))
+                away_team = shorten_name(' '.join(element.find(attrs={"class": "ply name"}).get_text().strip().split(" ")))
 
                 home_team_score = element.find("div", "sco").get_text().split("-")[0].strip()
                 away_team_score = element.find("div", "sco").get_text().split("-")[1].strip()
