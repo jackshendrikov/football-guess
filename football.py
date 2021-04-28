@@ -15,9 +15,11 @@ def parse_html(page):
     soup = BeautifulSoup(page.read(), 'html.parser')
     table_wiki = soup.find('table', {'class': 'infobox vcard'})
 
+    tr_list = []
     result = []
     try:
         for tr in table_wiki.find_all('tr'):
+            tr_list.append(tr.find("td"))
             if tr.find('th'):
                 title = tr.find('th').text.replace('\n', '')
                 info = [i.text.replace('\n', '') for i in tr.find_all('td')]
@@ -27,8 +29,8 @@ def parse_html(page):
     except AttributeError:
         result.append(("Unexpected error", "error"))
 
-    print(result)
-    return result
+    link = "https:"+str(tr_list[0].find("a").find("img")["src"])
+    return [result, link]
 
 
 def process_data(res):
@@ -67,9 +69,9 @@ def gen_player():
 
     if html.getcode() == 200:
         result = parse_html(html)
-        player_stat = process_data(result)
+        player_stat = process_data(result[0])
 
-        return [player_stat, " ".join(random_player.split("_"))]
+        return [player_stat, " ".join(random_player.split("_")), result[1]]
 
     elif html.getcode() == 404:
         print("Page not found!")

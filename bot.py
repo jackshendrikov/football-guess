@@ -2,7 +2,7 @@ import telebot
 import sqlite3
 
 from config import token
-from random import choice
+from random import choice, shuffle
 from datetime import date
 
 from football import gen_player
@@ -13,6 +13,7 @@ from leagues.league_latest import ChampionshipLatest
 
 # New Bot Instance
 bot = telebot.TeleBot(token)
+print("Bot is running")
 
 
 # Welcome Menu
@@ -330,17 +331,29 @@ def send_ua_latest(message):
     bot.reply_to(message, user_msg, parse_mode="Markdown", disable_web_page_preview="True")
 
 
+# Football Game Type
+@bot.message_handler(regexp="⚽ Start the Game")
+def send_football(m):
+    user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
+
+    user_markup.row('Guessing by the picture', 'Guessing by the career')
+
+    user_msg = 'Choose the type of the game'
+    bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
+                     parse_mode="Markdown", disable_web_page_preview="True")
+
 # ============== Guess Player by his/her Statistics (Poll) ==============
-@bot.message_handler(regexp='⚽ Start the Game')
+@bot.message_handler(regexp='Guessing by the career')
 def guessing_game(message):
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
     user_markup.row('⚽ Check Statistics', 'ℹ️ Help')
-    user_markup.row('⚽ Start the Game')
+    user_markup.row('Guessing by the picture', "Guessing by the career")
 
     reply = gen_player()
     text = "```" + str(reply[0]) + "```"
     bot.send_message(message.chat.id, text, reply_markup=user_markup, parse_mode="MarkdownV2")
 
+    correct_answer = reply[1]
     variants = [reply[1]]
     for i in range(3):
         flag = True
@@ -350,10 +363,40 @@ def guessing_game(message):
             if random_player not in variants:
                 variants.append(random_player)
                 flag = False
+    shuffle(variants)
 
     bot.send_poll(chat_id=message.chat.id, question="Try to guess the player, according to his career",
                   is_anonymous=True, options=variants, type="quiz",
-                  correct_option_id=reply[1], reply_markup=user_markup,)
+                  correct_option_id=variants.index(correct_answer), reply_markup=user_markup,)
 
+# ============== Guess Player by his/her picture ==============
+@bot.message_handler(regexp='Guessing by the picture')
+def guessing_game(message):
+    user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
+    user_markup.row('⚽ Check Statistics', 'ℹ️ Help')
+    user_markup.row('Guessing by the picture', "Guessing by the career")
+
+    reply = gen_player()
+
+    correct_answer = reply[1]
+    variants = [reply[1]]
+    for i in range(3):
+        flag = True
+        while flag:
+            temp = choice(list(open('players.txt', encoding='utf-8'))).replace('\n', '')
+            random_player = " ".join(temp.split("_"))
+            if random_player not in variants:
+                variants.append(random_player)
+                flag = False
+    shuffle(variants)
+
+    bot.send_photo(message.chat.id, reply[2])
+
+    bot.send_poll(chat_id=message.chat.id, question="Try to guess the player, according to his career",
+                  is_anonymous=True, options=variants, type="quiz",
+                  correct_option_id=variants.index(correct_answer), reply_markup=user_markup,)
 
 bot.polling()
+
+
+
