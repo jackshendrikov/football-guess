@@ -392,7 +392,7 @@ def guessing_game(message):
 
     bot.send_photo(message.chat.id, reply[2])
 
-    bot.send_poll(chat_id=message.chat.id, question="Try to guess the player, according to his career",
+    bot.send_poll(chat_id=message.chat.id, question="Try to guess the player, according to his picture",
                   is_anonymous=True, options=variants, type="quiz",
                   correct_option_id=variants.index(correct_answer), reply_markup=user_markup,)
 
