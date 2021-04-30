@@ -151,7 +151,7 @@ crashlytics-build.properties
 fabric.properties
 
 # Config file
-config.py
+.env
 
 # SQLite Database
 *.sqlite

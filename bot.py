@@ -1,10 +1,9 @@
-import threading
-
 import telebot
 import psycopg2
-import config
+import threading
 
 from random import choice, shuffle
+from decouple import config
 from time import sleep
 
 from football import gen_player
@@ -14,11 +13,7 @@ from leagues.league_latest import ChampionshipLatest
 
 
 try:
-    db = psycopg2.connect(user=config.db_user,
-                          password=config.db_password,
-                          host=config.db_host,
-                          port=config.db_port,
-                          database=config.db_name)
+    db = psycopg2.connect(config('DATABASE_URL'))
 
     cursor = db.cursor()
 
@@ -38,7 +33,7 @@ except Exception as error:
     print("Error occurred", error)
 
 # New Bot Instance
-bot = telebot.TeleBot(config.token)
+bot = telebot.TeleBot(config('API_TOKEN'))
 print("Bot is running")
 
 
@@ -46,11 +41,11 @@ def bot_polling():
     while True:
         try:
             print("Starting bot polling now. New bot instance started!")
-            bot.polling(none_stop=True, interval=config.bot_interval, timeout=config.bot_timeout)
+            bot.polling(none_stop=True, interval=config('BOT_INTERVAL'), timeout=config('BOT_TIMEOUT'))
         except Exception as ex:
-            print("Bot polling failed, restarting in {}sec. Error:\n{}".format(config.bot_timeout, ex))
+            print("Bot polling failed, restarting in {}sec. Error:\n{}".format(config('BOT_TIMEOUT'), ex))
             bot.stop_polling()
-            sleep(config.bot_timeout)
+            sleep(config('BOT_TIMEOUT'))
         else:
             bot.stop_polling()
             print("Bot polling loop finished.")
