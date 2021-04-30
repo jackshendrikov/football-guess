@@ -23,7 +23,7 @@ try:
     # Print PostgreSQL version
     cursor.execute("SELECT version();")
     record = cursor.fetchone()
-    print("You are connected to - ", record,"\n")
+    print("You are connected to - ", record, '\n')
 
     # Create Users Table
     cursor.execute('CREATE TABLE IF NOT EXISTS users (id SERIAL, userId VARCHAR NOT NULL);')
@@ -36,16 +36,19 @@ except Exception as error:
 bot = telebot.TeleBot(config('API_TOKEN'))
 print("Bot is running")
 
+BOT_INTERVAL = int(config('BOT_INTERVAL'))
+BOT_TIMEOUT = int(config('BOT_TIMEOUT'))
+
 
 def bot_polling():
     while True:
         try:
             print("Starting bot polling now. New bot instance started!")
-            bot.polling(none_stop=True, interval=config('BOT_INTERVAL'), timeout=config('BOT_TIMEOUT'))
+            bot.polling(none_stop=True, interval=BOT_INTERVAL, timeout=BOT_TIMEOUT)
         except Exception as ex:
-            print("Bot polling failed, restarting in {}sec. Error:\n{}".format(config('BOT_TIMEOUT'), ex))
+            print("Bot polling failed, restarting in {}sec. Error:\n{}".format(BOT_TIMEOUT, ex))
             bot.stop_polling()
-            sleep(config('BOT_TIMEOUT'))
+            sleep(BOT_TIMEOUT)
         else:
             bot.stop_polling()
             print("Bot polling loop finished.")
