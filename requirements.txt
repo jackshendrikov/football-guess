@@ -1,0 +1,8 @@
+pyTelegramBotAPI==3.7.7
+beautifulsoup4== 4.9.3
+requests==2.25.1
+texttable==1.6.3
+prettytable==2.1.0
+lxml==4.6.3
+psycopg2==2.8.6
+gunicorn==20.1.0

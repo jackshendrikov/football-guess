@@ -1,6 +1,4 @@
 """ This module defines all of work with scores of commands of specific league for the last week """
-import re
-
 import requests
 
 from bs4 import BeautifulSoup

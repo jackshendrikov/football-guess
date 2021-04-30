@@ -1,9 +1,11 @@
-import telebot
-import sqlite3
+import threading
 
-from config import token
+import telebot
+import psycopg2
+import config
+
 from random import choice, shuffle
-from datetime import date
+from time import sleep
 
 from football import gen_player
 from leagues.league_table import ChampionshipTable
@@ -11,9 +13,48 @@ from leagues.league_scores import ChampionshipScores
 from leagues.league_latest import ChampionshipLatest
 
 
+try:
+    db = psycopg2.connect(user=config.db_user,
+                          password=config.db_password,
+                          host=config.db_host,
+                          port=config.db_port,
+                          database=config.db_name)
+
+    cursor = db.cursor()
+
+    # Print PostgreSQL Connection properties
+    print(db.get_dsn_parameters(), "\n")
+
+    # Print PostgreSQL version
+    cursor.execute("SELECT version();")
+    record = cursor.fetchone()
+    print("You are connected to - ", record,"\n")
+
+    # Create Users Table
+    cursor.execute('CREATE TABLE IF NOT EXISTS users (id SERIAL, userId VARCHAR NOT NULL);')
+    db.commit()
+    print("Table created successfully in PostgreSQL!")
+except Exception as error:
+    print("Error occurred", error)
+
 # New Bot Instance
-bot = telebot.TeleBot(token)
+bot = telebot.TeleBot(config.token)
 print("Bot is running")
+
+
+def bot_polling():
+    while True:
+        try:
+            print("Starting bot polling now. New bot instance started!")
+            bot.polling(none_stop=True, interval=config.bot_interval, timeout=config.bot_timeout)
+        except Exception as ex:
+            print("Bot polling failed, restarting in {}sec. Error:\n{}".format(config.bot_timeout, ex))
+            bot.stop_polling()
+            sleep(config.bot_timeout)
+        else:
+            bot.stop_polling()
+            print("Bot polling loop finished.")
+            break
 
 
 # Welcome Menu
@@ -24,23 +65,12 @@ def send_welcome(m):
         user_markup.row('⚽ Check Statistics', 'ℹ️ Help')
         user_markup.row('⚽ Start the Game')
 
-        db = sqlite3.connect("footballDB.sqlite")
-        cursor = db.cursor()
-
-        # Print SQLite version
-        print("You are connected to - SQLite v", sqlite3.version, "\n")
-
-        # Create Users Table
-        cursor.execute('CREATE TABLE IF NOT EXISTS users (id SERIAL, userId VARCHAR NOT NULL);')
-        db.commit()
-        print("Table created successfully in SQLite! ")
-
         from_user = [m.from_user.id]
-        cursor.execute('SELECT EXISTS(SELECT userId FROM users WHERE userId = ?)', from_user)
+        cursor.execute('SELECT EXISTS(SELECT userId FROM users WHERE "userid" = CAST(%s AS VARCHAR))', from_user)
         check = cursor.fetchone()
 
         if not check[0]:
-            cursor.execute('INSERT INTO users (userId) VALUES (?)', from_user)
+            cursor.execute('INSERT INTO users (userId) VALUES (%s)', from_user)
             db.commit()
             count = cursor.rowcount
             print(count, "Record inserted successfully into users table")
@@ -342,6 +372,7 @@ def send_football(m):
     bot.send_message(m.chat.id, user_msg, reply_markup=user_markup,
                      parse_mode="Markdown", disable_web_page_preview="True")
 
+
 # ============== Guess Player by his/her Statistics (Poll) ==============
 @bot.message_handler(regexp='Guessing by the career')
 def guessing_game(message):
@@ -368,6 +399,7 @@ def guessing_game(message):
     bot.send_poll(chat_id=message.chat.id, question="Try to guess the player, according to his career",
                   is_anonymous=True, options=variants, type="quiz",
                   correct_option_id=variants.index(correct_answer), reply_markup=user_markup,)
+
 
 # ============== Guess Player by his/her picture ==============
 @bot.message_handler(regexp='Guessing by the picture')
@@ -396,7 +428,15 @@ def guessing_game(message):
                   is_anonymous=True, options=variants, type="quiz",
                   correct_option_id=variants.index(correct_answer), reply_markup=user_markup,)
 
-bot.polling()
 
+polling_thread = threading.Thread(target=bot_polling)
+polling_thread.daemon = True
+polling_thread.start()
 
-
+# Keep main program running while bot runs threaded
+if __name__ == "__main__":
+    while True:
+        try:
+            sleep(120)
+        except KeyboardInterrupt:
+            break
