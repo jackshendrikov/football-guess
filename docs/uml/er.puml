@@ -1,0 +1,20 @@
+@startuml
+entity Group <<ENTITY>> {
+    endPoint: TEXT
+}
+
+entity Teacher <<ENTITY>> {
+    endPoint: TEXT
+}
+
+entity User <<ENTITY>> {
+    uid: INTEGER
+    username: TEXT
+    group_id: INTEGER
+    name_id: INTEGER
+}
+
+
+Group "0,*" -u- "1,1" User
+Teacher "0,*" -u- "1,1" User
+@enduml

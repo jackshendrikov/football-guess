@@ -10,7 +10,7 @@
 
 Проект розроблено мовою `python3`, тому поперше треба встановити необхідні пакети:
 ```
-pip install telebot
+pip install pyTelegramBotAPI
 ```
 
 Для функціонування бота потрібно вказати `API_TOKEN` як змінну оточення(environment variable):

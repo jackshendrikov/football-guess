@@ -1,0 +1,16 @@
+@startuml
+usecase UC_01 as "<b>UC_01</b>\nРеєстрація"
+usecase UC_02 as "<b>UC_02</b>\nОтримати розклад\n(викладач)"
+@startuml
+usecase UC_01 as "<b>UC_01</b>\nОтримати турнірну таблицю"
+usecase UC_02 as "<b>UC_02</b>\nОтримати розклад туру"
+usecase UC_03 as "<b>UC_03</b>\nОтримати результати туру"
+usecase UC_04 as "<b>UC_04</b>\nРозпочати гру"
+
+actor :Користувач: as user
+
+user -d-> UC_01
+user-d-> UC_02
+user-d-> UC_03
+user-d-> UC_04
+@enduml

@@ -1,3 +1,20 @@
+"""
+## Programm structure
+bot.py handles all the messages users send to bot. Then it uses `AnswerGenerator`
+to get the reply to user's command. This file contains message handlers.
+## Executing the bot
+To execute, you need to provide bot's `API_TOKEN` using environment variable.
+In Linux:
+```
+export API_TOKEN=xxx
+```
+Then just run bot.py:
+```
+python3 ./bot.py
+```
+---
+"""
+
 import telebot
 import psycopg2
 import threading
@@ -58,6 +75,8 @@ def bot_polling():
 # Welcome Menu
 @bot.message_handler(commands=['start'])
 def send_welcome(m):
+    """[note]:
+    Handles the **/start** comand."""
     try:
         user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
         user_markup.row('⚽ Check Statistics', 'ℹ️ Help')
@@ -96,6 +115,9 @@ def send_welcome(m):
 # Main Menu
 @bot.message_handler(regexp="👈 Main Menu")
 def main_menu(m):
+    """[note]:
+    Handles the **/Main Menu** button.
+"""
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
     user_markup.row('⚽ Check Statistics', 'ℹ️ Help')
     user_markup.row('⚽ Start the Game')
@@ -108,7 +130,10 @@ def main_menu(m):
 # Help Menu
 @bot.message_handler(regexp="ℹ️ Help")
 def command_help(m):
-    help_text = "*FootGuessr Bot* 🤖: Send a private message to one of my creators *@jackshen*, *@rudek0* " \
+    """[note]:
+    Handles the **/Help** button.
+    """
+    help_text = "*FootGuessr Bot* 🤖: Send a private message to one of my creators *@gorik333*, " \
                 "if you need help with something."
     bot.send_message(m.chat.id, help_text, parse_mode='Markdown', disable_web_page_preview="True")
 
@@ -116,6 +141,9 @@ def command_help(m):
 # Football Stat Menu
 @bot.message_handler(regexp="⚽ Check Statistics")
 def send_football(m):
+    """[note]:
+    Handles the choosing of league
+    """
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
 
     user_markup.row('🏴󠁧󠁢󠁥󠁮󠁧󠁿󠁧󠁢󠁥󠁮󠁧󠁿 England', '🇪🇸 Spain')
@@ -131,6 +159,9 @@ def send_football(m):
 # Back to Main Football Menu
 @bot.message_handler(regexp="👈 Back")
 def football_back(m):
+    """[note]:
+    Handles the Back button
+    """
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
 
     user_markup.row('🏴󠁧󠁢󠁥󠁮󠁧󠁿󠁧󠁢󠁥󠁮󠁧󠁿 England', '🇪🇸 Spain')
@@ -374,6 +405,9 @@ def send_football(m):
 # ============== Guess Player by his/her Statistics (Poll) ==============
 @bot.message_handler(regexp='Guessing by the career')
 def guessing_game(message):
+    """[note]:
+    Handles the mini-game
+    """
     user_markup = telebot.types.ReplyKeyboardMarkup(True, True)
     user_markup.row('⚽ Check Statistics', 'ℹ️ Help')
     user_markup.row('Guessing by the picture', "Guessing by the career")
