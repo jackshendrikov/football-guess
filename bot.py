@@ -84,7 +84,7 @@ def send_welcome(m):
                     'Player data is taken from [Wiki](https://en.wikipedia.org/wiki/Main_Page).\n' \
                     'Football stats from [Livescores](livescores.com).\n\n' \
                     'Press any button below to interact with me 😀\n\n' \
-                    'Made with ❤️ by *@jackshen* & *@rudek0*'
+                    'Made by *@gorik333* '
 
         bot.send_message(m.chat.id, start_msg.format(m.from_user.first_name), reply_markup=user_markup,
                          parse_mode="Markdown", disable_web_page_preview="True")
